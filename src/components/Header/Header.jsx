@@ -1,10 +1,11 @@
 import React from "react";  
 import Button from "../Button/Button";                
 import { useTelegram } from "../../Hooks/useTelegram";
-import './Header.css';   
+import './Header.css'; 
+
 
 const Header = () => {   
-    const { user, onClose} = useTelegram();
+    const {tg, user, onClose } = useTelegram();
     
 
                        
@@ -12,7 +13,7 @@ const Header = () => {
         <div className={'header'}>
             <Button onClick={onClose}>Закрыть</Button>
             <span className={'username'}>
-                {user?.username}
+                {tg.initDataUnsafe?.user?.username}
             </span>
         </div>
     );  
