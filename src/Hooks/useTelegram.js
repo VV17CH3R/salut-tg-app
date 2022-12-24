@@ -12,12 +12,12 @@ export function useTelegram(){
         } else {
             tg.MainButton.show()
         }
-      
+    }
 
     return {
         onClose,
         tg,
-        user: tg.initDataUnsafe?.user?
+        user: tg.initDataUnsafe?.user,
     }
-}
+      
 }
