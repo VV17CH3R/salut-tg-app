@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback} from "react";
 import { useTelegram } from "../../Hooks/useTelegram";
 import './Form.css';                
 
+
 const Form = () => {   
     const [name, setName] = useState();    
     const [phone, setPhone] = useState();      
@@ -18,7 +19,7 @@ const Form = () => {
     }, [name, phone, deliv])
 
     useEffect(()=>{
-        tg.onEvent('mainButtonClicked', callback)
+        tg.onEvent('mainButtonClicked', onSendData)
         return () => {
             tg.offEvent( 'mainButtonClicked', onSendData)
         }
