@@ -4,15 +4,15 @@ import ProductItem from "../ProductItem/ProductItem";
 import { useTelegram } from "../../Hooks/useTelegram";
 
 const products =[
-    {id:'1', title: 'Великобритания', price: 150, description:'    Великолепный ранний сорт '},
-    {id:'2', title: 'Эми', price: 150, description:'       Великолепный ранний сорт '},
-    {id:'3', title: 'Элли', price: 150 , description:'  Великолепный ранний сорт   Великолепный ранний сорт '},
-    {id: '3.5', title: 'Джинсы 2', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '4', title: 'Куртка 8', price: 122, description: 'Зеленого цвета, теплая'},
-    {id: '5', title: 'Джинсы 3', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '6', title: 'Куртка 7', price: 600, description: 'Зеленого цвета, теплая'},
-    {id: '7', title: 'Джинсы 4', price: 5500, description: 'Синего цвета, прямые'},
-    {id: '8', title: 'Куртка 5', price: 12000, description: 'Зеленого цвета, теплая'},
+    {id:'1', title: 'Великобритания (3 саженца)', price: 450, description:'    Великолепный ранний сорт '},
+    {id:'2', title: 'Эми (3 саженца)', price: 450, description:'       Великолепный ранний сорт '},
+    {id:'3', title: 'Элли (3 саженца)', price: 450 , description:'  Великолепный ранний сорт   Великолепный ранний сорт '},
+    {id: '3.5', title: 'Джемма (3 саженца)', price: 450, description: 'Великолепный ранний сорт'},
+    {id: '4', title: 'Вивальди (3 саженца)', price: 450, description: 'Великолепный ранний сорт'},
+    {id: '5', title: 'Москова (3 саженца)', price: 450, description: 'Великолепный ранний сорт'},
+    {id: '6', title: 'Клери (3 саженца)', price: 450, description: 'Великолепный ранний сорт'},
+    {id: '7', title: 'Дивная (3 саженца)', price: 450, description: 'Великолепный ранний сорт'},
+    {id: '8', title: 'Дочь дивной (3 саженца)', price: 450, description: 'Великолепный ранний сорт'},
 
 
 
@@ -30,6 +30,28 @@ const ProductList = () => {
     const [addedItems, setAddedItems] = useState([])
     const {tg} = useTelegram();
     
+    const onSendData = useCallback(() => {
+        const data = {
+            products: addedItems,
+            totalPrice: getTotalPrice(addedItems)
+        }
+        fetch('http://localhost:8000',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }
+        )
+    }, [])
+
+    useEffect(()=>{
+        tg.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.offEvent( 'mainButtonClicked', onSendData)
+        }
+    },[onSendData]) 
+
     const onAdd = (product) =>{
         const alreadyAdded = addedItems.find(item => item.id === product.id);
         let newItems = [];
