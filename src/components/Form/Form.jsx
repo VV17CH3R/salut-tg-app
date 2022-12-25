@@ -15,14 +15,14 @@ const Form = () => {
             deliv
         }
         tg.sendData(JSON.stringify(data));
-    }, [])
+    }, [name, phone, deliv])
 
     useEffect(()=>{
         tg.onEvent('mainButtonClicked', callback)
         return () => {
             tg.offEvent( 'mainButtonClicked', onSendData)
         }
-    },[]) 
+    },[onSendData]) 
 
     useEffect( () => {
         tg.MainButton.setParams({
