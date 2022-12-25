@@ -1,4 +1,4 @@
-import React, {useState} from "react";  
+import React, {useState, useCallback, useEffect} from "react";  
 import './ProductList.css';                
 import ProductItem from "../ProductItem/ProductItem";
 import { useTelegram } from "../../Hooks/useTelegram";
@@ -7,7 +7,12 @@ const products =[
     {id:'1', title: 'Великобритания', price:'150', description:' Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт '},
     {id:'2', title: 'Эми', price:'150', description:' Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт '},
     {id:'3', title: 'Элли', price:'150', description:' Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт  Великолепный ранний сорт '},
-
+    {id: '3.5', title: 'Джинсы 2', price: 5000, description: 'Синего цвета, прямые'},
+    {id: '4', title: 'Куртка 8', price: 122, description: 'Зеленого цвета, теплая'},
+    {id: '5', title: 'Джинсы 3', price: 5000, description: 'Синего цвета, прямые'},
+    {id: '6', title: 'Куртка 7', price: 600, description: 'Зеленого цвета, теплая'},
+    {id: '7', title: 'Джинсы 4', price: 5500, description: 'Синего цвета, прямые'},
+    {id: '8', title: 'Куртка 5', price: 12000, description: 'Зеленого цвета, теплая'},
 
 
 
@@ -43,14 +48,14 @@ const ProductList = () => {
         } else {
             tg.MainButton.show();
             tg.MainButton.setParams({
-                text: 'Купить ${getTotalPrice(newItems)}'
+                text: `Купить ${getTotalPrice(newItems)}` 
             })
         }
     }
 
     return(
         <div className={'list'}>
-                {ProductList.map(item => (
+                {products.map(item => (
                     <ProductItem 
                         product = {item}
                         onAdd = {onAdd}
